@@ -89,8 +89,9 @@ GameObject:
   - component: {fileID: 3752985764346141147}
   - component: {fileID: 6996191038319750255}
   - component: {fileID: 4633228123647998363}
+  - component: {fileID: 15580784626357052}
   m_Layer: 0
-  m_Name: Cube.001
+  m_Name: Awning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,6 +157,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &15580784626357052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128361417104930224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 458b2aaa07be2394087ac09ad52e601f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1161626153511543871
 GameObject:
   m_ObjectHideFlags: 0
