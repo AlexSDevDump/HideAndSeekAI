@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody rb;
     public float speed;
+    public float rotSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -13,9 +14,17 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void Movement(Vector3 moveDir)
+    public void RunForward(float movement)
     {
-        moveDir = moveDir.normalized * speed;
-        rb.MovePosition(rb.position + moveDir * Time.deltaTime);
+        movement *= speed;
+        Vector3 finalMovement = transform.forward * movement;
+        rb.MovePosition(rb.position + finalMovement * Time.deltaTime);
+    }
+
+    public void Rotation(float rotation)
+    {
+        float finalRotation = 360f / rotation * rotSpeed;
+        Quaternion deltaRotation = Quaternion.Euler(new Vector3(0, finalRotation, 0) * Time.deltaTime);
+        rb.MoveRotation(rb.rotation * deltaRotation);
     }
 }

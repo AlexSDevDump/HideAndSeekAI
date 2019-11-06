@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class UserInput : MonoBehaviour
 {
-    private Vector2 movement;
+    private float movement;
+    private float rotation;
     private PlayerController pc;
 
     // Start is called before the first frame update
@@ -16,10 +17,10 @@ public class UserInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movement = Input.GetAxisRaw("Vertical");
+        if (movement != 0f) { pc.RunForward(movement); }
 
-        Vector3 finalMovement = new Vector3(movement.x, 0f, movement.y);
-        if (movement != Vector2.zero) { pc.Movement(finalMovement); }
+        rotation = Input.GetAxisRaw("Horizontal");
+        if (rotation != 0f) { pc.Rotation(rotation); }
     }
 }
