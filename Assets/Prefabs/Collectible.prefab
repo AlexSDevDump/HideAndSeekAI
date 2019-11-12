@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 2912329160614487631}
   - component: {fileID: 5456966377823544501}
   - component: {fileID: 4122052936957289224}
+  - component: {fileID: 8330725675600441636}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Collectible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +89,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4619055641672773517}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -106,3 +107,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomColour: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &8330725675600441636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4619055641672773517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54ffc7c35a599d248b6f709b3932844e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

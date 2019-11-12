@@ -10,7 +10,6 @@ public class SpawnPointController : MonoBehaviour
     void Start()
     {
         InitialiseList();
-        RandomPoint();
     }
 
     void InitialiseList()
@@ -21,7 +20,7 @@ public class SpawnPointController : MonoBehaviour
         }
     }
 
-    void RandomPoint()
+    public void RandomPoint()
     {
         int rand = Random.Range(0, spawnPoints.Count - 1);
         SpawnPoint(rand, objToSpawn);
