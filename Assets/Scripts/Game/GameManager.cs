@@ -9,10 +9,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int score = 0;
 
-    private void Start()
+    void Start()
     {
         ResetTime();
-        player = FindObjectOfType<PlayerController>().gameObject;
+        NewSeeker();
+        SpawnCollectible();
     }
 
     // Update is called once per frame
@@ -52,5 +53,10 @@ public class GameManager : MonoBehaviour
     void SpawnCollectible()
     {
         FindObjectOfType<SpawnPointController>().RandomPoint();
+    }
+
+    void NewSeeker()
+    {
+        player = FindObjectOfType<SpawnSeeker>().SpawnNewSeeker();
     }
 }

@@ -48,8 +48,15 @@ public class CameraSwitch : MonoBehaviour
 
     void ResetTransform()
     {
+        mainCam.transform.SetParent(camPos[currentCamID]);
         Transform t = mainCam.transform;
         t.localPosition = Vector3.zero;
         t.localRotation = Quaternion.identity;
+    }
+
+    public void SetSeekerCamPos(Transform t)
+    {
+        camPos[0] = t;
+        ResetTransform();
     }
 }

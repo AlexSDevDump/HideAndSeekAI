@@ -34,9 +34,9 @@ public class AIController : MonoBehaviour
         Vector3[] sensors = new Vector3[]
         {
             transform.TransformDirection(Vector3.left),
-            transform.TransformDirection(Vector3.left + Vector3.forward),
+            transform.TransformDirection((Vector3.left + Vector3.forward).normalized),
             transform.TransformDirection(Vector3.forward),
-            transform.TransformDirection(Vector3.right + Vector3.forward),
+            transform.TransformDirection((Vector3.right + Vector3.forward).normalized),
             transform.TransformDirection(Vector3.right),
         };
 

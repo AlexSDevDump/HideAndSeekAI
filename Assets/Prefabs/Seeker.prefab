@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79cb452fa94982a4694e47c050da0ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 8
   rotSpeed: 1
 --- !u!114 &6743682026429641389
 MonoBehaviour:
@@ -166,9 +166,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2469990845977614450}
+  - component: {fileID: 1444576434288373907}
   m_Layer: 0
-  m_Name: CamMaster
-  m_TagString: Untagged
+  m_Name: SeekerCam
+  m_TagString: CameraPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -187,6 +188,18 @@ Transform:
   m_Father: {fileID: 2795457528910308432}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
+--- !u!114 &1444576434288373907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5771379496869526568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ccecdd13c17a84e862f0a8ce50a5fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1882164405392078999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -194,11 +207,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2795457528910308432}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: a4463e3824191e2408b49b41c7bfc229,
-        type: 3}
-      propertyPath: m_Name
-      value: Ghost
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a4463e3824191e2408b49b41c7bfc229,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -284,6 +292,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: d0e2ebe7c506ef84ea1ebb5211271299, type: 2}
+    - target: {fileID: -927199367670048503, guid: a4463e3824191e2408b49b41c7bfc229,
+        type: 3}
+      propertyPath: m_Name
+      value: Ghost
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4463e3824191e2408b49b41c7bfc229, type: 3}
 --- !u!4 &6873757759546774413 stripped
