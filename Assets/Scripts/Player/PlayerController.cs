@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody rb;
-    public float speed;
-    public float rotSpeed;
+    public Rigidbody rb;
+    public float speed = 8;
+    public float rotSpeed = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        if (rb == null) { rb = GetComponent<Rigidbody>(); }
     }
 
     public void RunForward(float movement)

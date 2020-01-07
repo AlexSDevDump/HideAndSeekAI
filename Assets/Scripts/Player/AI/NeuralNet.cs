@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
-public class NeuralNet : MonoBehaviour
+public class NeuralNet : IComparable<NeuralNet>
 {
     private int[] layers;
     private float[][] neurons;
@@ -14,19 +12,7 @@ public class NeuralNet : MonoBehaviour
 
     public float fitness = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void NeuralNetwork(int[] layers)
+    public NeuralNet(int[] layers)
     {
         this.layers = new int[layers.Length];
         for (int i = 0; i < layers.Length; i++)
@@ -157,6 +143,54 @@ public class NeuralNet : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Save(string path)//this is used for saving the biases and weights within the network to a file.
+    {
+        File.Create(path).Close();
+        StreamWriter writer = new StreamWriter(path, true);
+
+        for (int i = 0; i < biases.Length; i++)
+        {
+            for (int j = 0; j < biases[i].Length; j++)
+            {
+                writer.WriteLine(biases[i][j]);
+            }
+        }
+
+        for (int i = 0; i < weights.Length; i++)
+        {
+            for (int j = 0; j < weights[i].Length; j++)
+            {
+                for (int k = 0; k < weights[i][j].Length; k++)
+                {
+                    writer.WriteLine(weights[i][j][k]);
+                }
+            }
+        }
+        writer.Close();
+    }
+
+    public NeuralNet copy(NeuralNet nn) //For creatinga deep copy, to ensure arrays are serialzed.
+    {
+        for (int i = 0; i < biases.Length; i++)
+        {
+            for (int j = 0; j < biases[i].Length; j++)
+            {
+                nn.biases[i][j] = biases[i][j];
+            }
+        }
+        for (int i = 0; i < weights.Length; i++)
+        {
+            for (int j = 0; j < weights[i].Length; j++)
+            {
+                for (int k = 0; k < weights[i][j].Length; k++)
+                {
+                    nn.weights[i][j][k] = weights[i][j][k];
+                }
+            }
+        }
+        return nn;
     }
 
     public void Mutate(int chance, float val)

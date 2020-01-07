@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3492049308014170344}
   - component: {fileID: 7527816719594882918}
   - component: {fileID: 5188421659443413483}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Objective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,6 +178,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cherry
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 753830792387de04db5334113661e315,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534866581884222612, guid: 753830792387de04db5334113661e315,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 753830792387de04db5334113661e315, type: 3}

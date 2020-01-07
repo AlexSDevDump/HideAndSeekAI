@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6743682026429641389}
   m_Layer: 0
   m_Name: Seeker
-  m_TagString: Player
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,8 +77,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79cb452fa94982a4694e47c050da0ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 2795457528910308438}
   speed: 8
-  rotSpeed: 1
+  rotSpeed: 0.2
 --- !u!114 &6743682026429641389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,7 +92,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40aa0c5b3cefb634999fc6fa0773763d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: 0
+  badLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  goodLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  alive: 0
   fitness: 0
   inp:
   - 0
