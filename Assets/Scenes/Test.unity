@@ -3808,11 +3808,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
-  player: {fileID: 0}
-  lifespan: 10
+  lifespan: 30
+  botCount: 10
   score: 0
   layers: 050000000300000002000000
-  MutationChance: 0.01
+  MutationChance: 0.1
   MutationStrength: 0.5
   Gamespeed: 10
 --- !u!4 &1641968605
@@ -3858,7 +3858,7 @@ MonoBehaviour:
   camPos:
   - {fileID: 0}
   - {fileID: 1014186493}
-  currentCamID: 0
+  currentCamID: 1
 --- !u!4 &1649180902 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4571607808328285440, guid: 72eaad839484a7f42a44fc0871d0e89c,
@@ -4884,7 +4884,7 @@ PrefabInstance:
     - target: {fileID: 84471361043440571, guid: 70f0230b6ca0d1149ac66020da48bf94,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.49
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 84471361043440571, guid: 70f0230b6ca0d1149ac66020da48bf94,
         type: 3}

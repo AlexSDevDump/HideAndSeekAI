@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     {
         movement *= speed;
         Vector3 finalMovement = transform.forward * movement;
-        rb.MovePosition(rb.position + finalMovement * Time.deltaTime);
+        if(finalMovement.z > 0)
+            rb.MovePosition(rb.position + finalMovement * Time.deltaTime);
     }
 
     public void Rotation(float rotation)

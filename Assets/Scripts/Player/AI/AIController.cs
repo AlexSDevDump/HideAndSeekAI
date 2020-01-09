@@ -11,12 +11,15 @@ public class AIController : MonoBehaviour
     public LayerMask badLayers;
     public LayerMask goodLayers;
 
+    public int badDetDist, goodDetDist;
+
     public NeuralNet network;
 
     public bool alive;
     private float movement = 0;
     private float rotation = 0;
     public float fitness;
+    private float barrierPen;
     public float[] inp;
 
 
@@ -38,42 +41,49 @@ public class AIController : MonoBehaviour
 
             Vector3[] sensors = new Vector3[]
             {
+            transform.TransformDirection(Vector3.forward),
             transform.TransformDirection(Vector3.left),
             transform.TransformDirection((Vector3.left + Vector3.forward).normalized),
-            transform.TransformDirection(Vector3.forward),
             transform.TransformDirection((Vector3.right + Vector3.forward).normalized),
             transform.TransformDirection(Vector3.right),
             };
 
             inp = new float[sensors.Length];
 
-            for (int i = 0; i < sensors.Length; i++)
+            if (Physics.Raycast(transform.position, sensors[0], out hit, badDetDist * 3, badLayers))
             {
-                if (Physics.Raycast(transform.position, sensors[i], out hit, 10f, badLayers))
+                if (hit.collider != null && hit.collider != col)
+                {
+                    inp[0] = 1 - (hit.distance / badDetDist * 3);
+                }
+                else
+                    inp[0] = 0;
+            }
+            Debug.DrawRay(transform.position, sensors[0] * badDetDist, Color.red);
+
+            for (int i = 1; i < sensors.Length; i++)
+            {
+                if (Physics.Raycast(transform.position, sensors[i], out hit, badDetDist, badLayers))
                 {
                     if (hit.collider != null && hit.collider != col)
                     {
-                        inp[i] =  1 - (10 - hit.distance) / 10;
+                        inp[i] =  1 - (hit.distance / badDetDist);
                     }
                     else
-                        inp[i] = 1;
+                        inp[i] = 0;
                 }
-                    Debug.DrawRay(transform.position, sensors[i] * 10, Color.red);
+                    Debug.DrawRay(transform.position, sensors[i] * badDetDist, Color.red);
             }
 
-            if(Physics.Raycast(transform.position, sensors[2], out hit, 20f, goodLayers))
+            if(Physics.Raycast(transform.position, sensors[0], out hit, goodDetDist, goodLayers))
             {
-                Debug.Log("I SEE A CHERRY");
+                fitness += Time.deltaTime;
                 if (hit.collider != null && hit.collider != col)
                 {
-                    if(inp[2] < (20 - hit.distance) / 20)
-                    {
-                        inp[2] = (20 - hit.distance) / 20;
-                    }
+                    inp[0] = (hit.distance / goodDetDist);
                 }
             }
-
-            Debug.DrawRay(transform.position, sensors[2] * 20, Color.green);
+            Debug.DrawRay(transform.position, sensors[0] * goodDetDist, Color.green);
 
             float[] output = network.FeedForward(inp);
             AIMovement(output);
@@ -91,14 +101,23 @@ public class AIController : MonoBehaviour
 
     public void UpdateFitness()
     {
-        network.fitness = FindObjectOfType<GameManager>().score;//updates fitness of network for sorting
+        float finalFitness = FindObjectOfType<GameManager>().score + fitness;
+        if (!alive)
+            finalFitness -= 1;
+        if(finalFitness < 0) { finalFitness = 0; }
+        network.fitness = finalFitness;//updates fitness of network
+    }
+
+    void KillAI()
+    {
+        alive = false;
     }
 
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.collider.gameObject.layer == badLayers)
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Barrier"))
         {
-            alive = false;
+            KillAI();
         }
     }
 }

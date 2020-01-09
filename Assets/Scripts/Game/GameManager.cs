@@ -1,16 +1,21 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public SpawnSeeker spawner;
-    public GameObject player;
+    //public GameObject player;
     public float lifespan;
+    private float currentLifespan;
+    public int botCount;
+    private bool running;
     [SerializeField]
     public int score = 0;
 
     public int[] layers = new int[3] { 5, 3, 2 };//initializing network to the right size
 
-    private NeuralNet network;
+    private List<NeuralNet> networks;
+    private List<AIController> bots;
 
     [Range(0.0001f, 1f)] public float MutationChance = 0.01f;
 
@@ -21,9 +26,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        currentLifespan = lifespan;
+        ResetScore();
         spawner = FindObjectOfType<SpawnSeeker>();
         SetupNetwork();
         SpawnCollectible();
+        NewSeeker();
+        running = true;
     }
 
     // Update is called once per frame
@@ -31,12 +40,23 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) { SpawnCollectible(); }
         if (Input.GetKeyDown(KeyCode.T)) { AddScore(); }
+
+        if(running)
+        {
+            currentLifespan -= Time.deltaTime;
+            if(currentLifespan <= 0)
+            {
+                currentLifespan = lifespan;
+                NewSeeker();
+            }
+        }
     }
 
 
     public void AddScore()
     {
-        score++;
+        currentLifespan = lifespan;
+        score += 10;
         FindObjectOfType<UIUpdate>().UpdateScore(score);
         SpawnCollectible();
     }
@@ -55,31 +75,52 @@ public class GameManager : MonoBehaviour
     void NewSeeker()
     {
         Time.timeScale = Gamespeed;//sets gamespeed, which will increase to speed up training
-        ResetScore();
-        GameObject b = GameObject.FindGameObjectWithTag("Bot");
-        if (b != null)
+        
+        if (bots != null)
         {
-            GameObject.Destroy(b);
+            for(int i = 0; i < bots.Count; i++)
+            {
+                GameObject.Destroy(bots[i].gameObject);;
+                ResetScore();
+            }
+
             UpdateNetwork();
         }
-        AIController a = spawner.SpawnNewSeeker().GetComponent<AIController>();
-        a.network = network;
+
+        bots = new List<AIController>();
+        for(int i = 0; i < botCount; i++)
+        {
+            AIController bot = spawner.SpawnNewSeeker().GetComponent<AIController>();
+            bot.network = networks[i];
+            bots.Add(bot);
+        }
     }
 
     void UpdateNetwork()
     {
-        network.Save("Assets/Scripts/Player/AI/NNModel.txt");
-        network = network.copy(new NeuralNet(layers));
-        network.Mutate((int)(1 / MutationChance), MutationStrength);
+        for (int i = 0; i < botCount; i++)
+        {
+            bots[i].UpdateFitness();//gets bots to set their corrosponding networks fitness
+        }
+        networks.Sort();
+        networks[botCount - 1].Save("Assets/Scripts/Player/AI/NNModel.txt");
+        for (int i = 0; i < botCount / 2; i++)
+        {
+            networks[i] = networks[i + botCount / 2].copy(new NeuralNet(layers));
+            networks[i].Mutate((int)(1 / MutationChance), MutationStrength);
+        }
     }
 
     public void SetupNetwork()
     {
-        network = new NeuralNet(layers);
-        if (!System.IO.File.Exists("Assets/Scripts/Player/AI/NNModel.txt"))
-            System.IO.File.WriteAllText("Assets/Scripts/Player/AI/NNModel.txt", "");
-        network.Load("Assets/Scripts/Player/AI/NNModel.txt");//on start load the network save
-
-        InvokeRepeating("NewSeeker", 0.1f, lifespan);//repeating function
+        networks = new List<NeuralNet>();
+        for (int i = 0; i < botCount; i++)
+        {
+            NeuralNet net = new NeuralNet(layers);
+            if (!System.IO.File.Exists("Assets/Scripts/Player/AI/NNModel.txt"))
+                System.IO.File.WriteAllText("Assets/Scripts/Player/AI/NNModel.txt", "");
+            net.Load("Assets/Scripts/Player/AI/NNModel.txt");//on start load the network save
+            networks.Add(net);
+        }
     }
 }
