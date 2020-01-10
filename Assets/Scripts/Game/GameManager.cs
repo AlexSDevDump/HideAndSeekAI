@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) { SpawnCollectible(); }
         if (Input.GetKeyDown(KeyCode.T)) { AddScore(); }
+        if (Input.GetKeyDown(KeyCode.L)) { SaveNetwork(); }
 
         if(running)
         {
@@ -122,5 +123,14 @@ public class GameManager : MonoBehaviour
             net.Load("Assets/Scripts/Player/AI/NNModel.txt");//on start load the network save
             networks.Add(net);
         }
+    }
+
+    public void SaveNetwork()
+    {
+        NeuralNet net = networks[0];
+
+        if (!System.IO.File.Exists("Assets/Scripts/Player/AI/SavedModel.txt"))
+            System.IO.File.WriteAllText("Assets/Scripts/Player/AI/SavedModel.txt", "");
+        net.Save("Assets/Scripts/Player/AI/SavedModel.txt");//on start load the network save
     }
 }

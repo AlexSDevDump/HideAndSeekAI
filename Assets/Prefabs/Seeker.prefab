@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 2795457528910308438}
   speed: 8
-  rotSpeed: 0.2
+  rotSpeed: 0.6
 --- !u!114 &6760863756135967269
 MonoBehaviour:
   m_ObjectHideFlags: 0
